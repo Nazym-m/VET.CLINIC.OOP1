@@ -11,10 +11,44 @@ public class Veterinarian {
         this.isOnDuty = isOnDuty;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public int getExperienceYears() { return experienceYears; }
-    public void setExperienceYears(int exp) { this.experienceYears = exp; }
+    public Veterinarian() {
+        this.name = "Unknown";
+        this.specialization = "General";
+        this.experienceYears = 0;
+        this.isOnDuty = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public int getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(int experienceYears) {
+        this.experienceYears = experienceYears;
+    }
+
+    public boolean isOnDuty() {
+        return isOnDuty;
+    }
+
+    public void setOnDuty(boolean isOnDuty) {
+        this.isOnDuty = isOnDuty;
+    }
 
     public boolean isExperienced() {
         return experienceYears >= 5;
@@ -26,6 +60,7 @@ public class Veterinarian {
 
     @Override
     public String toString() {
-        return "Veterinarian{name='" + name + "', spec='" + specialization + "', exp=" + experienceYears + ", onDuty=" + isOnDuty + "}";
+        return "Veterinarian{name='" + name + "', specialization='" + specialization + 
+               "', experienceYears=" + experienceYears + ", isOnDuty=" + isOnDuty + "}";
     }
 }
