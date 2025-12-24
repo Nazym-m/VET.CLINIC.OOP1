@@ -12,7 +12,7 @@ public class Appointment {
     }
 
     public void applyEmergencySurcharge() {
-        this.cost += 5000.0; // Доплата за срочность
+        this.cost += 5000.0; 
     }
 
     public void updateReason(String newReason) {
