@@ -1,4 +1,4 @@
-Animal cat = new Cat(id, name, age, owner, indoor); // POLYMORPHISM
+Animal cat = new Cat(id, name, age, owner, indoor); 
         animals.add(cat);
 
         System.out.println("Cat added successfully.");
@@ -23,7 +23,7 @@ private static void demonstratePolymorphism() {
     System.out.println("\n--- POLYMORPHISM DEMO ---");
 
     for (Animal a : animals) {
-        a.makeSound(); // SAME METHOD, DIFFERENT OUTPUT
+        a.makeSound(); 
     }
 
     System.out.println("Same method, different behavior = Polymorphism.");
