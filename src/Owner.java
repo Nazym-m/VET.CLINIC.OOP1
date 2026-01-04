@@ -9,12 +9,10 @@ public class Owner {
         setPhone(phone);
     }
 
-    // Getters
     public int getOwnerId() { return ownerId; }
     public String getName() { return name; }
     public String getPhone() { return phone; }
 
-    // Validation
     public void setName(String name) {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
