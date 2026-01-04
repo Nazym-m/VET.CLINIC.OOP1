@@ -11,13 +11,11 @@ public class Pet {
         setAge(age);
     }
 
-    // Getters
     public int getPetId() { return petId; }
     public String getName() { return name; }
     public String getType() { return type; }
     public int getAge() { return age; }
 
-    // Setters with validation
     public void setName(String name) {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
@@ -50,3 +48,4 @@ public class Pet {
                ", Age: " + age;
     }
 }
+
