@@ -113,7 +113,7 @@ public class Main {
         System.out.print("Breed: ");
         String breed = scanner.nextLine();
 
-        Animal dog = new Dog(id, name, age, owner, breed); // POLYMORPHISM
+        Animal dog = new Dog(id, name, age, owner, breed); 
         animals.add(dog);
 
         System.out.println("Dog added successfully.");
@@ -140,7 +140,7 @@ public class Main {
         boolean indoor = scanner.nextBoolean();
         scanner.nextLine();
 
-        Animal cat = new Cat(id, name, age, owner, indoor); // POLYMORPHISM
+        Animal cat = new Cat(id, name, age, owner, indoor); 
         animals.add(cat);
 
         System.out.println("Cat added successfully.");
@@ -164,7 +164,7 @@ public class Main {
         System.out.println("\n--- POLYMORPHISM DEMO ---");
 
         for (Animal a : animals) {
-            a.makeSound(); // SAME METHOD, DIFFERENT OUTPUT
+            a.makeSound(); 
         }
 
         System.out.println("Same method, different behavior = Polymorphism.");
