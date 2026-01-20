@@ -35,7 +35,6 @@ public class MenuManager implements Menu {
         System.out.println("2. Add Cat");
         System.out.println("3. View All Animals");
         System.out.println("4. Demonstrate Polymorphism");
-        System.out.println("5. View Dogs Only");
         System.out.println("0. Exit");
         System.out.print("Enter choice: ");
     }
@@ -62,9 +61,6 @@ public class MenuManager implements Menu {
                         break;
                     case 4:
                         demonstratePolymorphism();
-                        break;
-                    case 5:
-                        viewDogsOnly();
                         break;
                     case 0:
                         running = false;
@@ -181,24 +177,5 @@ public class MenuManager implements Menu {
         }
 
         System.out.println("Same method, different behavior = Polymorphism.");
-    }
-
-    private void viewDogsOnly() {
-        System.out.println("\n--- DOGS ONLY ---");
-
-        int count = 0;
-
-        for (Animal a : animals) {
-            if (a instanceof Dog) {
-                Dog dog = (Dog) a;
-                count++;
-                System.out.println(count + ". " + dog.getName() +
-                        " | Breed: " + dog.getBreed());
-            }
-        }
-
-        if (count == 0) {
-            System.out.println("No dogs found.");
-        }
     }
 }
