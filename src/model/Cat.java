@@ -31,7 +31,6 @@ public class Cat extends Animal implements Vaccinatable {
         return "Cat";
     }
 
-    // Implement Vaccinatable interface methods
     @Override
     public boolean needsVaccination() {
         return !indoor && !vaccinated;
