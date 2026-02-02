@@ -4,37 +4,34 @@ import model.Animal;
 import model.Dog;
 import model.Cat;
 import exception.AnimalAgeException;
-import java.util.ArrayList;
+import database.AnimalDAO;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuManager implements Menu {
-    private ArrayList<Animal> animals;
+    private AnimalDAO animalDAO;
     private Scanner scanner;
 
     public MenuManager() {
-        this.animals = new ArrayList<>();
+        this.animalDAO = new AnimalDAO();
         this.scanner = new Scanner(System.in);
-
-        try {
-            animals.add(new Dog(1, "Buddy", 3, "Aruzhan", "Labrador"));
-            animals.add(new Cat(2, "Misty", 2, "Dias", true));
-            animals.add(new Dog(3, "Rex", 5, "Aidar", "German Shepherd"));
-        } catch (AnimalAgeException e) {
-            System.out.println("Error initializing test data: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error initializing test data: " + e.getMessage());
-        }
     }
 
     @Override
     public void displayMenu() {
-        System.out.println("\n================================");
-        System.out.println(" VET CLINIC MANAGEMENT SYSTEM");
-        System.out.println("================================");
+        System.out.println("\n========================================");
+        System.out.println("   VET CLINIC MANAGEMENT SYSTEM");
+        System.out.println("========================================");
         System.out.println("1. Add Dog");
         System.out.println("2. Add Cat");
         System.out.println("3. View All Animals");
-        System.out.println("4. Demonstrate Polymorphism");
+        System.out.println("4. Search Animal by Name");
+        System.out.println("5. Search Animal by Owner");
+        System.out.println("6. Update Animal");
+        System.out.println("7. Delete Animal");
+        System.out.println("8. View Statistics");
+        System.out.println("9. Demonstrate Polymorphism");
         System.out.println("0. Exit");
         System.out.print("Enter choice: ");
     }
@@ -60,6 +57,21 @@ public class MenuManager implements Menu {
                         viewAllAnimals();
                         break;
                     case 4:
+                        searchByName();
+                        break;
+                    case 5:
+                        searchByOwner();
+                        break;
+                    case 6:
+                        updateAnimal();
+                        break;
+                    case 7:
+                        deleteAnimal();
+                        break;
+                    case 8:
+                        viewStatistics();
+                        break;
+                    case 9:
                         demonstratePolymorphism();
                         break;
                     case 0:
@@ -74,15 +86,11 @@ public class MenuManager implements Menu {
                     System.out.println("\nPress Enter to continue...");
                     scanner.nextLine();
                 }
+
             } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a valid number!");
-                scanner.nextLine();
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-                scanner.nextLine();
+                System.out.println("Please enter a valid number!");
             }
         }
-
         scanner.close();
     }
 
@@ -106,8 +114,12 @@ public class MenuManager implements Menu {
             String breed = scanner.nextLine();
 
             Dog dog = new Dog(id, name, age, owner, breed);
-            animals.add(dog);
-            System.out.println("Dog added successfully.");
+
+            if (animalDAO.insertAnimal(dog)) {
+                System.out.println("✅ Dog added successfully to database.");
+            } else {
+                System.out.println("❌ Failed to add dog to database.");
+            }
 
         } catch (NumberFormatException e) {
             System.out.println("Error: Invalid number format!");
@@ -138,8 +150,12 @@ public class MenuManager implements Menu {
             boolean indoor = Boolean.parseBoolean(scanner.nextLine());
 
             Cat cat = new Cat(id, name, age, owner, indoor);
-            animals.add(cat);
-            System.out.println("Cat added successfully.");
+
+            if (animalDAO.insertAnimal(cat)) {
+                System.out.println("✅ Cat added successfully to database.");
+            } else {
+                System.out.println("❌ Failed to add cat to database.");
+            }
 
         } catch (NumberFormatException e) {
             System.out.println("Error: Invalid number format!");
@@ -153,8 +169,10 @@ public class MenuManager implements Menu {
     private void viewAllAnimals() {
         System.out.println("\n--- ALL ANIMALS ---");
 
+        List<Animal> animals = animalDAO.getAllAnimals();
+
         if (animals.isEmpty()) {
-            System.out.println("No animals found.");
+            System.out.println("No animals found in database.");
             return;
         }
 
@@ -162,20 +180,189 @@ public class MenuManager implements Menu {
             Animal a = animals.get(i);
             System.out.println((i + 1) + ". " + a);
         }
+
+        System.out.println("\nTotal: " + animals.size() + " animals");
+    }
+
+    private void searchByName() {
+        System.out.println("\n--- SEARCH BY NAME ---");
+        System.out.print("Enter animal name (or part of name): ");
+        String searchTerm = scanner.nextLine();
+
+        List<Animal> animals = animalDAO.searchByName(searchTerm);
+
+        if (animals.isEmpty()) {
+            System.out.println("No animals found with name containing: " + searchTerm);
+            return;
+        }
+
+        System.out.println("\nFound " + animals.size() + " animals:");
+        for (Animal animal : animals) {
+            System.out.println(animal);
+        }
+    }
+
+    private void searchByOwner() {
+        System.out.println("\n--- SEARCH BY OWNER ---");
+        System.out.print("Enter owner name (or part of name): ");
+        String ownerName = scanner.nextLine();
+
+        List<Animal> animals = animalDAO.searchByOwner(ownerName);
+
+        if (animals.isEmpty()) {
+            System.out.println("No animals found for owner: " + ownerName);
+            return;
+        }
+
+        System.out.println("\nFound " + animals.size() + " animals:");
+        for (Animal animal : animals) {
+            System.out.println(animal);
+        }
+    }
+
+    private void updateAnimal() {
+        System.out.println("\n--- UPDATE ANIMAL ---");
+        System.out.print("Enter Animal ID to update: ");
+
+        try {
+            int animalId = Integer.parseInt(scanner.nextLine());
+
+            Animal existingAnimal = animalDAO.getAnimalById(animalId);
+            if (existingAnimal == null) {
+                System.out.println("❌ No animal found with ID: " + animalId);
+                return;
+            }
+
+            System.out.println("Current information:");
+            System.out.println(existingAnimal);
+
+            System.out.println("\nEnter new information (press Enter to keep current value):");
+
+            System.out.print("Name [" + existingAnimal.getName() + "]: ");
+            String newName = scanner.nextLine();
+            if (!newName.trim().isEmpty()) {
+                existingAnimal.setName(newName);
+            }
+
+            System.out.print("Age [" + existingAnimal.getAge() + "]: ");
+            String ageInput = scanner.nextLine();
+            if (!ageInput.trim().isEmpty()) {
+                try {
+                    existingAnimal.setAge(Integer.parseInt(ageInput));
+                } catch (AnimalAgeException e) {
+                    System.out.println("❌ Invalid age: " + e.getMessage());
+                    return;
+                }
+            }
+
+            System.out.print("Owner name [" + existingAnimal.getOwnerName() + "]: ");
+            String newOwner = scanner.nextLine();
+            if (!newOwner.trim().isEmpty()) {
+                existingAnimal.setOwnerName(newOwner);
+            }
+
+            if (existingAnimal instanceof Dog) {
+                Dog dog = (Dog) existingAnimal;
+                System.out.print("Breed [" + dog.getBreed() + "]: ");
+                String newBreed = scanner.nextLine();
+                if (!newBreed.trim().isEmpty()) {
+                    dog.setBreed(newBreed);
+                }
+            } else if (existingAnimal instanceof Cat) {
+                Cat cat = (Cat) existingAnimal;
+                System.out.print("Indoor [" + cat.isIndoor() + "] (true/false): ");
+                String indoorInput = scanner.nextLine();
+                if (!indoorInput.trim().isEmpty()) {
+                    cat.setIndoor(Boolean.parseBoolean(indoorInput));
+                }
+            }
+
+            if (animalDAO.updateAnimal(existingAnimal)) {
+                System.out.println("✅ Animal updated successfully.");
+            } else {
+                System.out.println("❌ Failed to update animal.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Invalid ID format!");
+        }
+    }
+
+    private void deleteAnimal() {
+        System.out.println("\n--- DELETE ANIMAL ---");
+        System.out.print("Enter Animal ID to delete: ");
+
+        try {
+            int animalId = Integer.parseInt(scanner.nextLine());
+
+            Animal animal = animalDAO.getAnimalById(animalId);
+            if (animal == null) {
+                System.out.println("❌ No animal found with ID: " + animalId);
+                return;
+            }
+
+            System.out.println("Animal to delete:");
+            System.out.println(animal);
+            System.out.print("\n⚠️  Are you sure? Type 'yes' to confirm: ");
+
+            String confirmation = scanner.nextLine();
+            if (confirmation.equalsIgnoreCase("yes")) {
+                if (animalDAO.deleteAnimal(animalId)) {
+                    System.out.println("✅ Animal deleted successfully.");
+                } else {
+                    System.out.println("❌ Failed to delete animal.");
+                }
+            } else {
+                System.out.println("❌ Deletion cancelled.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Invalid ID format!");
+        }
+    }
+
+    private void viewStatistics() {
+        System.out.println("\n--- CLINIC STATISTICS ---");
+
+        List<Animal> allAnimals = animalDAO.getAllAnimals();
+        int totalAnimals = allAnimals.size();
+        int dogs = animalDAO.countByType("Dog");
+        int cats = animalDAO.countByType("Cat");
+
+        System.out.println("Total animals: " + totalAnimals);
+        System.out.println("Dogs: " + dogs);
+        System.out.println("Cats: " + cats);
+
+        if (totalAnimals > 0) {
+            double dogPercentage = (dogs * 100.0) / totalAnimals;
+            double catPercentage = (cats * 100.0) / totalAnimals;
+            System.out.printf("Distribution: Dogs %.1f%% | Cats %.1f%%\n", dogPercentage, catPercentage);
+        }
     }
 
     private void demonstratePolymorphism() {
         System.out.println("\n--- POLYMORPHISM DEMO ---");
 
+        List<Animal> animals = animalDAO.getAllAnimals();
+
         if (animals.isEmpty()) {
-            System.out.println("No animals to demonstrate.");
+            System.out.println("No animals in database to demonstrate.");
             return;
         }
 
+        System.out.println("Animal sounds:");
         for (Animal a : animals) {
             a.makeSound();
         }
 
-        System.out.println("Same method, different behavior = Polymorphism.");
+        System.out.println("\nVaccination needs:");
+        for (Animal a : animals) {
+            if (a instanceof Cat) {
+                Cat cat = (Cat) a;
+                System.out.println(cat.getVaccineInfo());
+            }
+        }
+
+        System.out.println("\nSame method, different behavior = Polymorphism.");
     }
 }
