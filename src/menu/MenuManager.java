@@ -30,8 +30,7 @@ public class MenuManager implements Menu {
         System.out.println("5. Search Animal by Owner");
         System.out.println("6. Update Animal");
         System.out.println("7. Delete Animal");
-        System.out.println("8. View Statistics");
-        System.out.println("9. Demonstrate Polymorphism");
+        System.out.println("8. Demonstrate Polymorphism");
         System.out.println("0. Exit");
         System.out.print("Enter choice: ");
     }
@@ -69,9 +68,6 @@ public class MenuManager implements Menu {
                         deleteAnimal();
                         break;
                     case 8:
-                        viewStatistics();
-                        break;
-                    case 9:
                         demonstratePolymorphism();
                         break;
                     case 0:
@@ -318,25 +314,6 @@ public class MenuManager implements Menu {
 
         } catch (NumberFormatException e) {
             System.out.println("❌ Invalid ID format!");
-        }
-    }
-
-    private void viewStatistics() {
-        System.out.println("\n--- CLINIC STATISTICS ---");
-
-        List<Animal> allAnimals = animalDAO.getAllAnimals();
-        int totalAnimals = allAnimals.size();
-        int dogs = animalDAO.countByType("Dog");
-        int cats = animalDAO.countByType("Cat");
-
-        System.out.println("Total animals: " + totalAnimals);
-        System.out.println("Dogs: " + dogs);
-        System.out.println("Cats: " + cats);
-
-        if (totalAnimals > 0) {
-            double dogPercentage = (dogs * 100.0) / totalAnimals;
-            double catPercentage = (cats * 100.0) / totalAnimals;
-            System.out.printf("Distribution: Dogs %.1f%% | Cats %.1f%%\n", dogPercentage, catPercentage);
         }
     }
 
