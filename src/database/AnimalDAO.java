@@ -261,6 +261,26 @@ public class AnimalDAO {
 
             resultSet.close();
             statement.close();
+            System.out.println("✅ Found " + animals.size() + " animals between ages " + minAge + " and " + maxAge);
+        } catch (SQLException | AnimalAgeException e) {
+            System.out.println("❌ Search by age range failed: " + e.getMessage());
+        } finally {
+            DatabaseConnection.closeConnection(connection);
+        }
+
+        return animals;
+    }
+
+    public List<Animal> searchByMinAge(int minAge) {
+        List<Animal> animals = new ArrayList<>();
+        String sql = "SELECT * FROM animal WHERE age >= ? ORDER BY age DESC";
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return animals;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, minAge);
+            ResultSet resultSet = statement.executeQuery();
 
         } catch (SQLException e) {
             System.out.println("❌ Count failed: " + e.getMessage());
