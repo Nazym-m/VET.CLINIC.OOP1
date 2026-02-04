@@ -177,6 +177,7 @@ public class AnimalDAO {
 
             resultSet.close();
             statement.close();
+
         } catch (SQLException | AnimalAgeException e) {
             System.out.println("❌ Search failed: " + e.getMessage());
         } finally {
@@ -206,6 +207,7 @@ public class AnimalDAO {
 
             resultSet.close();
             statement.close();
+
         } catch (SQLException | AnimalAgeException e) {
             System.out.println("❌ Search failed: " + e.getMessage());
         } finally {
@@ -236,6 +238,7 @@ public class AnimalDAO {
 
             resultSet.close();
             statement.close();
+
             System.out.println("✅ Found " + animals.size() + " animals between ages " + minAge + " and " + maxAge);
         } catch (SQLException | AnimalAgeException e) {
             System.out.println("❌ Search by age range failed: " + e.getMessage());
@@ -266,6 +269,7 @@ public class AnimalDAO {
 
             resultSet.close();
             statement.close();
+
             System.out.println("✅ Found " + animals.size() + " animals with age >= " + minAge);
         } catch (SQLException | AnimalAgeException e) {
             System.out.println("❌ Search by min age failed: " + e.getMessage());
@@ -287,7 +291,8 @@ public class AnimalDAO {
         if (species.equalsIgnoreCase("dog")) {
             Dog dog = new Dog(id, name, age, owner, breed != null ? breed : "Unknown");
             return dog;
-        } else if (species.equalsIgnoreCase("cat")) {
+        }
+        else if (species.equalsIgnoreCase("cat")) {
             Cat cat = new Cat(id, name, age, owner, isIndoor);
             return cat;
         }
