@@ -112,9 +112,9 @@ public class MenuManager implements Menu {
             Dog dog = new Dog(id, name, age, owner, breed);
 
             if (animalDAO.insertAnimal(dog)) {
-                System.out.println("✅ Dog added successfully to database.");
+                System.out.println("Dog added successfully to database.");
             } else {
-                System.out.println("❌ Failed to add dog to database.");
+                System.out.println("Failed to add dog to database.");
             }
 
         } catch (NumberFormatException e) {
@@ -148,9 +148,9 @@ public class MenuManager implements Menu {
             Cat cat = new Cat(id, name, age, owner, indoor);
 
             if (animalDAO.insertAnimal(cat)) {
-                System.out.println("✅ Cat added successfully to database.");
+                System.out.println("Cat added successfully to database.");
             } else {
-                System.out.println("❌ Failed to add cat to database.");
+                System.out.println("Failed to add cat to database.");
             }
 
         } catch (NumberFormatException e) {
@@ -225,7 +225,7 @@ public class MenuManager implements Menu {
 
             Animal existingAnimal = animalDAO.getAnimalById(animalId);
             if (existingAnimal == null) {
-                System.out.println("❌ No animal found with ID: " + animalId);
+                System.out.println("No animal found with ID: " + animalId);
                 return;
             }
 
@@ -246,7 +246,7 @@ public class MenuManager implements Menu {
                 try {
                     existingAnimal.setAge(Integer.parseInt(ageInput));
                 } catch (AnimalAgeException e) {
-                    System.out.println("❌ Invalid age: " + e.getMessage());
+                    System.out.println("Invalid age: " + e.getMessage());
                     return;
                 }
             }
@@ -274,13 +274,13 @@ public class MenuManager implements Menu {
             }
 
             if (animalDAO.updateAnimal(existingAnimal)) {
-                System.out.println("✅ Animal updated successfully.");
+                System.out.println("Animal updated successfully.");
             } else {
-                System.out.println("❌ Failed to update animal.");
+                System.out.println("Failed to update animal.");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("❌ Invalid ID format!");
+            System.out.println("Invalid ID format!");
         }
     }
 
@@ -293,27 +293,27 @@ public class MenuManager implements Menu {
 
             Animal animal = animalDAO.getAnimalById(animalId);
             if (animal == null) {
-                System.out.println("❌ No animal found with ID: " + animalId);
+                System.out.println("No animal found with ID: " + animalId);
                 return;
             }
 
             System.out.println("Animal to delete:");
             System.out.println(animal);
-            System.out.print("\n⚠️  Are you sure? Type 'yes' to confirm: ");
+            System.out.print("\n Are you sure? Type 'yes' to confirm: ");
 
             String confirmation = scanner.nextLine();
             if (confirmation.equalsIgnoreCase("yes")) {
                 if (animalDAO.deleteAnimal(animalId)) {
-                    System.out.println("✅ Animal deleted successfully.");
+                    System.out.println("Animal deleted successfully.");
                 } else {
-                    System.out.println("❌ Failed to delete animal.");
+                    System.out.println("Failed to delete animal.");
                 }
             } else {
-                System.out.println("❌ Deletion cancelled.");
+                System.out.println("Deletion cancelled.");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("❌ Invalid ID format!");
+            System.out.println("Invalid ID format!");
         }
     }
 

@@ -145,6 +145,7 @@ public class AnimalDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, animalId);
+
             int rowsDeleted = statement.executeUpdate();
             statement.close();
             return rowsDeleted > 0;
@@ -156,7 +157,6 @@ public class AnimalDAO {
             DatabaseConnection.closeConnection(connection);
         }
     }
-
     public List<Animal> searchByName(String searchTerm) {
         List<Animal> animals = new ArrayList<>();
         String sql = "SELECT * FROM animal WHERE name ILIKE ? ORDER BY name";
