@@ -43,7 +43,7 @@ public class AnimalDAO {
             return rowsInserted > 0;
 
         } catch (SQLException e) {
-            System.out.println("❌ Insert failed: " + e.getMessage());
+            System.out.println(" Insert failed: " + e.getMessage());
             return false;
         } finally {
             DatabaseConnection.closeConnection(connection);
@@ -70,7 +70,7 @@ public class AnimalDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Select failed: " + e.getMessage());
+            System.out.println("Select failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -95,7 +95,7 @@ public class AnimalDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Get by ID failed: " + e.getMessage());
+            System.out.println("Get by ID failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -130,7 +130,7 @@ public class AnimalDAO {
             return rowsUpdated > 0;
 
         } catch (SQLException e) {
-            System.out.println("❌ Update failed: " + e.getMessage());
+            System.out.println("Update failed: " + e.getMessage());
             return false;
         } finally {
             DatabaseConnection.closeConnection(connection);
@@ -151,7 +151,7 @@ public class AnimalDAO {
             return rowsDeleted > 0;
 
         } catch (SQLException e) {
-            System.out.println("❌ Delete failed: " + e.getMessage());
+            System.out.println(" Delete failed: " + e.getMessage());
             return false;
         } finally {
             DatabaseConnection.closeConnection(connection);
@@ -179,7 +179,7 @@ public class AnimalDAO {
             statement.close();
 
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Search failed: " + e.getMessage());
+            System.out.println(" Search failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -209,7 +209,7 @@ public class AnimalDAO {
             statement.close();
 
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Search failed: " + e.getMessage());
+            System.out.println("Search failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -239,9 +239,9 @@ public class AnimalDAO {
             resultSet.close();
             statement.close();
 
-            System.out.println("✅ Found " + animals.size() + " animals between ages " + minAge + " and " + maxAge);
+            System.out.println(" Found " + animals.size() + " animals between ages " + minAge + " and " + maxAge);
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Search by age range failed: " + e.getMessage());
+            System.out.println("Search by age range failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -270,9 +270,9 @@ public class AnimalDAO {
             resultSet.close();
             statement.close();
 
-            System.out.println("✅ Found " + animals.size() + " animals with age >= " + minAge);
+            System.out.println(" Found " + animals.size() + " animals with age >= " + minAge);
         } catch (SQLException | AnimalAgeException e) {
-            System.out.println("❌ Search by min age failed: " + e.getMessage());
+            System.out.println("Search by min age failed: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }

@@ -308,8 +308,6 @@ public class MenuManager implements Menu {
                 } else {
                     System.out.println("Failed to delete animal.");
                 }
-            } else {
-                System.out.println("Deletion cancelled.");
             }
 
         } catch (NumberFormatException e) {
@@ -340,6 +338,5 @@ public class MenuManager implements Menu {
             }
         }
 
-        System.out.println("\nSame method, different behavior = Polymorphism.");
     }
 }
