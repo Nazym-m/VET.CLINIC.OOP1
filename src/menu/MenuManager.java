@@ -182,7 +182,7 @@ public class MenuManager implements Menu {
 
     private void searchByName() {
         System.out.println("\n--- SEARCH BY NAME ---");
-        System.out.print("Enter animal name (or part of name): ");
+        System.out.print("Enter animal name : ");
         String searchTerm = scanner.nextLine();
 
         List<Animal> animals = animalDAO.searchByName(searchTerm);
@@ -200,7 +200,7 @@ public class MenuManager implements Menu {
 
     private void searchByOwner() {
         System.out.println("\n--- SEARCH BY OWNER ---");
-        System.out.print("Enter owner name (or part of name): ");
+        System.out.print("Enter owner name: ");
         String ownerName = scanner.nextLine();
 
         List<Animal> animals = animalDAO.searchByOwner(ownerName);
